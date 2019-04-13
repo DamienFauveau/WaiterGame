@@ -1,0 +1,82 @@
+/*=============================*/
+/*-----------GERENAL-----------*/
+/*=============================*/
+img {
+	position: absolute;
+}
+/*=============================*/
+/*----------CONTAINERS---------*/
+/*=============================*/
+body {
+	background-color: black;
+	margin: 0;
+}
+div.container {
+	height: 500px;
+	display: inline-block;
+	float: left;
+}
+div#gameContainer {
+	width: 500px;
+	background-color: white;
+	border: 5px solid gray;
+    box-sizing: border-box;
+}
+div#infosContainer {
+	width: 200px;
+	background-color: #f2e7bf;
+	font-size: 14px;
+}
+div#infosContainer > div#infosTitle {
+	text-align: center;
+	margin: 10px;
+	font-size: 18px;
+	font-weight: bold;
+}
+/*=============================*/
+/*-----------ELEMENTS----------*/
+/*=============================*/
+img#bar {
+	top: 35px;
+	left: 281px;
+	z-index: 1;
+}
+img.table {
+	z-index: 1;
+}
+img#table2 {
+	top: 200px;
+	left: 150px;
+}
+img#table4 {
+	top: 250px;
+	left: 350px;
+}
+img#table6 {
+	top: 300px;
+	left: 100px;
+}
+img.plant {
+	z-index: 1;
+}
+img#plant1 {
+	top: 100px;
+	left: 150px;
+}
+img#plant2 {
+	top: 100px;
+	left: 50px;
+}
+img#plant3 {
+	top: 200px;
+	left: 50px;
+}
+/*=============================*/
+/*----------CHARACTERS---------*/
+/*=============================*/
+img#waiter {
+	top: 20px;
+    left: 368px;
+	z-index: 2;
+	transition: left .5s ease-in, top .5s ease-in;
+}
