@@ -19,18 +19,38 @@
 		<img id="plant2" class="plant" src="../assets/plant2.jpg" draggable="false">
 	</div>
 	<div id="infosContainer" class="container">
-		<div id="infosTitle">INFOS</div>
+		<div id="infosTitle">QUESTS</div>
 		<div id="infosPoints">
 			<span>Points : </span>
 			<span id="numberPoints">0</span>
 		</div>
+		<div id="infosQuest1" class="infosQuest">
+			<div class="questTitle">You have no quests going on.</div>
+			<div class="questContent"></div>
+		</div>
+		<div id="infosQuest2" class="infosQuest">
+			<div class="questTitle"></div>
+			<div class="questContent"></div>
+		</div>
+		<div id="infosQuest3" class="infosQuest">
+			<div class="questTitle"></div>
+			<div class="questContent"></div>
+		</div>
+		<div id="infosQuest4" class="infosQuest">
+			<div class="questTitle"></div>
+			<div class="questContent"></div>
+		</div>
+		<div id="infosQuest5" class="infosQuest">
+			<div class="questTitle"></div>
+			<div class="questContent"></div>
+		</div>
 	</div>
 
-	<button id="myBtn">Open Modal</button>
+	<button id="myBtn">Modal toggle</button>
 	<div id="modalChoice" class="modal">
 		<div class="modalContent">
 			<div class="modalHeader">
-				<h2>Modal Header</h2>
+				<h2>New quest</h2>
 			</div>
 			<div class="modalBody">
 				<p>Some text in the Modal Body</p>
@@ -39,6 +59,30 @@
 			<div class="modalFooter">
 				<span><button id="buttonAccept" class="close">ACCEPT</button></span>
 				<span><button id="buttonDeny" class="close">DENY</button></span>
+			</div>
+		</div>
+	</div>
+
+	<button id="myBtn2">Modal toggle</button>
+	<div id="modalCocktail" class="modal">
+		<div class="modalContent">
+			<div class="modalHeader">
+				<h2>Cocktail asked : <span>Mojito</span></h2>
+			</div>
+			<div class="modalBody">
+				<input type="checkbox" id="ingredient1" name="ingredient1">
+				<label for="ingredient1">Mint</label><br>
+				<input type="checkbox" id="ingredient2" name="ingredient2">
+				<label for="ingredient2">Orange</label><br>
+				<input type="checkbox" id="ingredient3" name="ingredient3">
+				<label for="ingredient3">Sugar</label><br>
+				<input type="checkbox" id="ingredient4" name="ingredient4">
+				<label for="ingredient4">Rhum</label><br>
+				<input type="checkbox" id="ingredient5" name="ingredient5">
+				<label for="ingredient5">Vodka</label><br>
+			</div>
+			<div class="modalFooter">
+				<span id="spanCocktail"><button id="buttonCocktail" class="close">MAKE COCKTAIL</button></span>
 			</div>
 		</div>
 	</div>

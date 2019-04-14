@@ -29,17 +29,18 @@ div#gameContainer {
 	border-bottom: none;
 }
 div#gameContainer:before {
-	content : "";
+	content: "";
 	position: absolute;
-	left    : 0;
-	bottom  : 0;
-	width   : 450px;
+	left: 0;
+	bottom: 0;
+	width: 430px;
 	border-bottom: 5px solid gray;
 }
 div#infosContainer {
 	width: 200px;
 	background-color: #f2e7bf;
 	font-size: 14px;
+	overflow: auto;
 }
 div#infosContainer > div {
 	margin: 10px 5px 20px 5px;
@@ -148,8 +149,7 @@ img#waiter {
 }
 .modalHeader {
 	padding: 2px 16px;
-	background-color: #5cb85c;
-	color: white;
+	background-color: #f2e7bf;
 }
 .modalBody {
 	padding: 2px 16px;
@@ -163,9 +163,11 @@ img#waiter {
 	display: inline-block;
 	padding: 5px 0;
 }
+.modalFooter > span#spanCocktail {
+	width: 100%;
+}
 .modalFooter > span > button {
-	background-color: #5cb85c;
-	color: white;
+	background-color: #f2e7bf;
 	margin: 0;
 	padding: 5px 10px;
 	border: none;

@@ -12,11 +12,19 @@ document.addEventListener('DOMContentLoaded', function(event) {
 	document.getElementById("myBtn").onclick = function() {
 		document.getElementById('modalChoice').style.display = "block";
 	}
-	
-	Array.from(document.getElementsByClassName("close")).forEach(function(element) {
-      	element.addEventListener('click', function() {
-			document.getElementById('modalChoice').style.display = "none";
-		});
-    });
+	document.getElementById("myBtn2").onclick = function() {
+		document.getElementById('modalCocktail').style.display = "block";
+	}
+
+	document.getElementById('buttonAccept').onclick = function() {
+		document.getElementById('modalChoice').style.display = "none";
+	};
+	document.getElementById('buttonDeny').onclick = function() {
+		document.getElementById('modalChoice').style.display = "none";
+	};
+
+    document.getElementById('buttonCocktail').onclick = function() {
+		document.getElementById('modalCocktail').style.display = "none";
+	};
 
 });
