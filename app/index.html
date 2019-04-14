@@ -1,24 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Game</title>
+	<title>BartenderGameV1.0</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script type="text/javascript" src="script.js"></script>
 </head>
 <body>
 	<div id="gameContainer" class="container">
 		&nbsp;
-		<img id="waiter" src="../assets/waiter.png">
-		<img id="bar" src="../assets/bar.jpg">
-		<img id="table2" class="table" src="../assets/table2.jpg">
-		<img id="table4" class="table" src="../assets/table4.jpg">
-		<img id="table6" class="table" src="../assets/table6.jpg">
-		<img id="plant1" class="plant" src="../assets/plant1.jpg">
-		<img id="plant2" class="plant" src="../assets/plant2.jpg">
-		<img id="plant3" class="plant" src="../assets/plant3.jpg">
+		<img id="waiter" src="../assets/waiter.png" draggable="false">
+		<img id="bar" src="../assets/bar.jpg" draggable="false">
+		<img id="table1" class="table" src="../assets/table4.jpg" draggable="false">
+		<img id="table2" class="table" src="../assets/table4.jpg" draggable="false">
+		<img id="table3" class="table" src="../assets/table4.jpg" draggable="false">
+		<img id="table4" class="table" src="../assets/table6.jpg" draggable="false">
+		<img id="table5" class="table" src="../assets/table6.jpg" draggable="false">
+		<img id="table6" class="table" src="../assets/table6.jpg" draggable="false">
+		<img id="plant2" class="plant" src="../assets/plant2.jpg" draggable="false">
 	</div>
 	<div id="infosContainer" class="container">
 		<div id="infosTitle">INFOS</div>
+		<div id="infosPoints">
+			<span>Points : </span>
+			<span id="numberPoints">0</span>
+		</div>
 	</div>
+
+	<button id="myBtn">Open Modal</button>
+	<div id="modalChoice" class="modal">
+		<div class="modalContent">
+			<div class="modalHeader">
+				<h2>Modal Header</h2>
+			</div>
+			<div class="modalBody">
+				<p>Some text in the Modal Body</p>
+				<p>Some other text...</p>
+			</div>
+			<div class="modalFooter">
+				<span><button id="buttonAccept" class="close">ACCEPT</button></span>
+				<span><button id="buttonDeny" class="close">DENY</button></span>
+			</div>
+		</div>
+	</div>
+
 </body>
 </html>

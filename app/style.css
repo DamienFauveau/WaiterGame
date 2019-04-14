@@ -10,6 +10,10 @@ img {
 body {
 	background-color: black;
 	margin: 0;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 div.container {
 	height: 500px;
@@ -19,17 +23,29 @@ div.container {
 div#gameContainer {
 	width: 500px;
 	background-color: white;
+	box-sizing: border-box;
+	position: relative;
 	border: 5px solid gray;
-    box-sizing: border-box;
+	border-bottom: none;
+}
+div#gameContainer:before {
+	content : "";
+	position: absolute;
+	left    : 0;
+	bottom  : 0;
+	width   : 450px;
+	border-bottom: 5px solid gray;
 }
 div#infosContainer {
 	width: 200px;
 	background-color: #f2e7bf;
 	font-size: 14px;
 }
+div#infosContainer > div {
+	margin: 10px 5px 20px 5px;
+}
 div#infosContainer > div#infosTitle {
 	text-align: center;
-	margin: 10px;
 	font-size: 18px;
 	font-weight: bold;
 }
@@ -38,45 +54,125 @@ div#infosContainer > div#infosTitle {
 /*=============================*/
 img#bar {
 	top: 35px;
-	left: 281px;
+	left: 276px;
 	z-index: 1;
 }
-img.table {
+img.table, img.plant {
 	z-index: 1;
+}
+img#table1 {
+	top: 20px;
+	left: 20px;
 }
 img#table2 {
-	top: 200px;
-	left: 150px;
+	top: 120px;
+	left: 20px;
+}
+img#table3 {
+	top: 220px;
+	left: 20px;
 }
 img#table4 {
-	top: 250px;
-	left: 350px;
+	top: 320px;
+	left: 20px;
+}
+img#table5 {
+	top: 400px;
+	left: 120px;
 }
 img#table6 {
-	top: 300px;
-	left: 100px;
-}
-img.plant {
-	z-index: 1;
-}
-img#plant1 {
-	top: 100px;
-	left: 150px;
+	top: 400px;
+	left: 250px;
 }
 img#plant2 {
-	top: 100px;
-	left: 50px;
-}
-img#plant3 {
-	top: 200px;
-	left: 50px;
+	top: 415px;
+    left: 30px;
 }
 /*=============================*/
 /*----------CHARACTERS---------*/
 /*=============================*/
 img#waiter {
 	top: 20px;
-    left: 368px;
+	left: 368px;
 	z-index: 2;
 	transition: left .5s ease-in, top .5s ease-in;
+}
+/*=============================*/
+/*-------------MODAL-----------*/
+/*=============================*/
+@keyframes fadein {
+	from { opacity: 0; }
+	to   { opacity: 1; }
+}
+@-moz-keyframes fadein {
+	from { opacity: 0; }
+	to   { opacity: 1; }
+}
+@-webkit-keyframes fadein {
+	from { opacity: 0; }
+	to   { opacity: 1; }
+}
+@-ms-keyframes fadein {
+	from { opacity: 0; }
+	to   { opacity: 1; }
+}
+@-o-keyframes fadein {
+	from { opacity: 0; }
+	to   { opacity: 1; }
+}
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 3;
+	padding-top: 50px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+}
+.modalContent {
+	position: relative;
+	background-color: #fefefe;
+	margin-left: 50px;
+	padding: 0;
+	border: 1px solid #888;
+	width: 400px;
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+	-webkit-animation-name: fadein;
+	-webkit-animation-duration: 1s;
+	animation-name: fadein;
+	animation-duration: 1s
+}
+.modalHeader {
+	padding: 2px 16px;
+	background-color: #5cb85c;
+	color: white;
+}
+.modalBody {
+	padding: 2px 16px;
+}
+.modalFooter {
+	width: 100%;
+}
+.modalFooter > span {
+	width: 49%;
+	text-align: center;
+	display: inline-block;
+	padding: 5px 0;
+}
+.modalFooter > span > button {
+	background-color: #5cb85c;
+	color: white;
+	margin: 0;
+	padding: 5px 10px;
+	border: none;
+}
+.modalFooter > span > button:hover,
+.modalFooter > span > button:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
 }
