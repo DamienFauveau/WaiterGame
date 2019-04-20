@@ -1,5 +1,6 @@
 //document.addEventListener('contextmenu', event => event.preventDefault())
 
+/* EVENTS */
 document.addEventListener('DOMContentLoaded', function(event) {
 
 	/* move character to cursor */
@@ -10,15 +11,21 @@ document.addEventListener('DOMContentLoaded', function(event) {
 		document.getElementById('waiter').style.left = xpos - 25 + 'px'
 	}
 
-	/* test btns toggle modals */
-	document.getElementById("myBtn").onclick = function() {
-		this.style.display = "none"
-		document.getElementById('modalChoice').style.display = "block"
-	}
-	document.getElementById("myBtn2").onclick = function() {
-		this.style.display = "none"
-		document.getElementById('modalCocktail').style.display = "block"
-	}
+	/* toggle modals */
+	Array.prototype.forEach.call(document.getElementsByClassName("infosQuest"), function(element, index) {
+		element.onclick = function() {
+			switch(this.children[1].innerHTML) {
+				case 'cocktail':
+					document.getElementById('modalCocktail').style.display = "block"
+					DeleteQuest(this)
+					break
+				case 'choice':
+					document.getElementById('modalChoice').style.display = "block"
+					DeleteQuest(this)
+					break
+			}
+		}
+	})
 
 	/* accept or deny request */
 	document.getElementById('buttonAccept').onclick = function() {
@@ -30,27 +37,28 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
 	/* Check if cocktail is correct */
     document.getElementById('buttonCocktail').onclick = function() {
-    	checkCocktail(this.value)
+    	CheckCocktail(this.value)
 	}
 
 })
 
-function checkCocktail(cocktailName) {
+function CheckCocktail(cocktailName) {
 	var chosenIng = []
 	var correctIng
 
 	switch(cocktailName) {
 		case 'mojito':
-			correctIng = cocktailMojito()
+			correctIng = CocktailMojito()
 			break
 		case 'punch':
-			correctIng = cocktailPunch()
+			correctIng = CocktailPunch()
 			break
 	}
 	
 	Array.prototype.forEach.call(document.getElementsByClassName("ingredient"), function(element, index) {
 		if(element.checked)
 	    	chosenIng.push(element['value'])
+	    element.checked = false
 	})
 
 	var nbPoints = document.getElementById('numberPoints').innerHTML;
@@ -63,29 +71,64 @@ function checkCocktail(cocktailName) {
 	document.getElementById('modalCocktail').style.display = "none"
 }
 
-function cocktailMojito() {
+function CocktailMojito() {
 	return ["mint","sugar","rhum"]
 }
-function cocktailPunch() {
+function CocktailPunch() {
 	return ["orange","sugar","rhum"]
 }
 
-function triggerEvent() {
-	if(Math.random() > 0.5) {
-		document.getElementById('buttonCocktail').value = 'mojito'
-		document.getElementById('myBtn2').style.display = "inline-block"
+function TriggerEvent() {
+	if(Math.random() > 0.33) {
+		if(Math.random() > 0.5) {
+			document.getElementById('buttonCocktail').value = 'mojito'
+			document.getElementById('modalCocktailName').innerHTML = 'Mojito'
+		}
+		else {
+			document.getElementById('buttonCocktail').value = 'punch'
+			document.getElementById('modalCocktailName').innerHTML = 'Punch'
+		}
+		AddQuest('cocktail')
 	}
 	else {
-		//document.getElementById('modalChoice').style.display = "block"
-		//add quest choice type
+		AddQuest('choice')
 	}
 }
 
+function AddQuest(questType) {
+	questAffected = false
+	Array.prototype.forEach.call(document.getElementsByClassName("infosQuest"), function(element, index) {
+		if(element.children[0].innerHTML == "Empty Quest" && !questAffected) {
+			switch(questType) {
+				case 'cocktail':
+					element.children[0].innerHTML = 'Make a cocktail'
+					element.children[1].innerHTML = questType
+					break
+				case 'choice':
+					element.children[0].innerHTML = 'Take care of a client'
+					element.children[1].innerHTML = questType
+					break
+			}
+	    	questAffected = true
+	    }
+	})
+	if(!questAffected) {
+		var nbPoints = document.getElementById('numberPoints').innerHTML;
+		document.getElementById('numberPoints').innerHTML = parseInt(nbPoints, 10) - 1
+	}
+}
+
+function DeleteQuest(questId) {
+	document.getElementById(questId.id).children[0].innerHTML = "Empty Quest"
+	document.getElementById(questId.id).children[1].innerHTML = "="
+}
+
+
 /* call randomly function (wait between 5s and 10s) */
-(function loop() {
+(function Loop() {
     var rand = Math.round(Math.random() * (10000 - 5000)) + 5000 // nb between 500 and 3000
     setTimeout(function() {
-        triggerEvent()
-        loop()
+        TriggerEvent()
+        Loop()
     }, rand)
 }())

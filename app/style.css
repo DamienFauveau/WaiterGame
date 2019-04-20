@@ -43,7 +43,14 @@ div#infosContainer {
 	overflow: auto;
 }
 div#infosContainer > div {
-	margin: 10px 5px 20px 5px;
+	padding: 10px 5px 20px 5px;
+}
+div#infosContainer > div.infosQuest:hover {
+	background: #ffe585;
+	cursor: pointer;
+}
+div#infosContainer > div.infosQuest > div.questContent {
+	display: none;
 }
 div#infosContainer > div#infosTitle {
 	text-align: center;
