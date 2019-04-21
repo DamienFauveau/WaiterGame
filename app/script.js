@@ -1,4 +1,4 @@
-//document.addEventListener('contextmenu', event => event.preventDefault())
+document.addEventListener('contextmenu', event => event.preventDefault())
 
 /* EVENTS */
 document.addEventListener('DOMContentLoaded', function(event) {
@@ -16,28 +16,46 @@ document.addEventListener('DOMContentLoaded', function(event) {
 		element.onclick = function() {
 			switch(this.children[1].innerHTML) {
 				case 'cocktail':
-					document.getElementById('modalCocktail').style.display = "block"
-					DeleteQuest(this)
-					break
+				if(Math.random() > 0.5) {
+					document.getElementById('buttonCocktail').value = 'mojito'
+					document.getElementById('modalCocktailName').innerHTML = 'Mojito'
+				}
+				else {
+					document.getElementById('buttonCocktail').value = 'punch'
+					document.getElementById('modalCocktailName').innerHTML = 'Punch'
+				}
+				document.getElementById('modalCocktail').style.display = "block"
+				DeleteQuest(this)
+				break
 				case 'choice':
-					document.getElementById('modalChoice').style.display = "block"
-					DeleteQuest(this)
-					break
+				if(Math.random() > 0.5) {
+					document.getElementById('buttonAccept').value = 'drunk'
+					document.getElementById('buttonDeny').value = 'drunk'
+					DrunkEvent()
+				}
+				else {
+					document.getElementById('buttonAccept').value = 'pants'
+					document.getElementById('buttonDeny').value = 'pants'
+					UnzippedEvent()
+				}
+				document.getElementById('modalChoice').style.display = "block"
+				DeleteQuest(this)
+				break
 			}
 		}
 	})
 
 	/* accept or deny request */
 	document.getElementById('buttonAccept').onclick = function() {
-		document.getElementById('modalChoice').style.display = "none"
+		CheckChoice(true, this.value)
 	}
 	document.getElementById('buttonDeny').onclick = function() {
-		document.getElementById('modalChoice').style.display = "none"
+		CheckChoice(false, this.value)
 	}
 
 	/* Check if cocktail is correct */
-    document.getElementById('buttonCocktail').onclick = function() {
-    	CheckCocktail(this.value)
+	document.getElementById('buttonCocktail').onclick = function() {
+		CheckCocktail(this.value)
 	}
 
 })
@@ -48,24 +66,23 @@ function CheckCocktail(cocktailName) {
 
 	switch(cocktailName) {
 		case 'mojito':
-			correctIng = CocktailMojito()
-			break
+		correctIng = CocktailMojito()
+		break
 		case 'punch':
-			correctIng = CocktailPunch()
-			break
+		correctIng = CocktailPunch()
+		break
 	}
 	
 	Array.prototype.forEach.call(document.getElementsByClassName("ingredient"), function(element, index) {
 		if(element.checked)
-	    	chosenIng.push(element['value'])
-	    element.checked = false
+			chosenIng.push(element['value'])
+		element.checked = false
 	})
 
-	var nbPoints = document.getElementById('numberPoints').innerHTML;
 	if(JSON.stringify(chosenIng) === JSON.stringify(correctIng)) {
-		document.getElementById('numberPoints').innerHTML = parseInt(nbPoints, 10) + 1
+		AddPoint()
 	} else {
-		document.getElementById('numberPoints').innerHTML = parseInt(nbPoints, 10) - 1
+		RemovePoint()
 	}
 	
 	document.getElementById('modalCocktail').style.display = "none"
@@ -78,16 +95,32 @@ function CocktailPunch() {
 	return ["orange","sugar","rhum"]
 }
 
+function CheckChoice(userChoice, type) {
+	var valid = false;
+	switch(type) {
+		case 'drunk':
+		if(!userChoice) {
+			valid = true
+		}
+		break
+		case 'pants':
+		if(userChoice) {
+			valid = true
+		}
+		console.log(type + userChoice)
+		break
+	}
+	if(valid) {
+		AddPoint()
+	}
+	else {
+		RemovePoint()
+	}
+	document.getElementById('modalChoice').style.display = "none"
+}
+
 function TriggerEvent() {
 	if(Math.random() > 0.33) {
-		if(Math.random() > 0.5) {
-			document.getElementById('buttonCocktail').value = 'mojito'
-			document.getElementById('modalCocktailName').innerHTML = 'Mojito'
-		}
-		else {
-			document.getElementById('buttonCocktail').value = 'punch'
-			document.getElementById('modalCocktailName').innerHTML = 'Punch'
-		}
 		AddQuest('cocktail')
 	}
 	else {
@@ -101,34 +134,49 @@ function AddQuest(questType) {
 		if(element.children[0].innerHTML == "Empty Quest" && !questAffected) {
 			switch(questType) {
 				case 'cocktail':
-					element.children[0].innerHTML = 'Make a cocktail'
-					element.children[1].innerHTML = questType
-					break
+				element.children[0].innerHTML = 'Make a cocktail'
+				element.children[1].innerHTML = questType
+				break
 				case 'choice':
-					element.children[0].innerHTML = 'Take care of a client'
-					element.children[1].innerHTML = questType
-					break
+				element.children[0].innerHTML = 'Take care of a client'
+				element.children[1].innerHTML = questType
+				break
 			}
-	    	questAffected = true
-	    }
+			questAffected = true
+		}
 	})
 	if(!questAffected) {
-		var nbPoints = document.getElementById('numberPoints').innerHTML;
-		document.getElementById('numberPoints').innerHTML = parseInt(nbPoints, 10) - 1
+		RemovePoint()
 	}
 }
 
 function DeleteQuest(questId) {
 	document.getElementById(questId.id).children[0].innerHTML = "Empty Quest"
-	document.getElementById(questId.id).children[1].innerHTML = "="
+	document.getElementById(questId.id).children[1].innerHTML = ""
 }
-
 
 /* call randomly function (wait between 5s and 10s) */
 (function Loop() {
     var rand = Math.round(Math.random() * (10000 - 5000)) + 5000 // nb between 500 and 3000
     setTimeout(function() {
-        TriggerEvent()
-        Loop()
+    	TriggerEvent()
+    	Loop()
     }, rand)
 }())
+
+function AddPoint() {
+	var nbPoints = document.getElementById('numberPoints').innerHTML;
+	document.getElementById('numberPoints').innerHTML = parseInt(nbPoints, 10) + 1
+}
+
+function RemovePoint() {
+	var nbPoints = document.getElementById('numberPoints').innerHTML;
+	document.getElementById('numberPoints').innerHTML = parseInt(nbPoints, 10) - 1
+}
+
+function DrunkEvent() {
+	document.getElementById('bodyChoiceContent').innerHTML = "This guy is wasted and ask for another drink. What do you do ?"
+}
+function UnzippedEvent() {
+	document.getElementById('bodyChoiceContent').innerHTML = "This guy came back from the bathroom with his pants unzipped. Do you tell him ?"
+}

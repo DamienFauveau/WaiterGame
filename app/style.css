@@ -94,7 +94,7 @@ img#table6 {
 }
 img#plant2 {
 	top: 415px;
-    left: 30px;
+	left: 30px;
 }
 /*=============================*/
 /*----------CHARACTERS---------*/
@@ -159,7 +159,7 @@ img#waiter {
 	background-color: #f2e7bf;
 }
 .modalBody {
-	padding: 2px 16px;
+	padding: 16px;
 }
 .modalFooter {
 	width: 100%;
