@@ -1,2 +1,2 @@
 RewriteEngine On
-RewriteRule ^$ /app [L]
+RewriteRule ^/$ /app [L]
