@@ -100,10 +100,14 @@ img#plant2 {
 /*----------CHARACTERS---------*/
 /*=============================*/
 img#waiter {
-	top: 20px;
+	top: 0px;
 	left: 368px;
-	z-index: 2;
+	z-index: 3;
 	transition: left .5s ease-in, top .5s ease-in;
+}
+img.person {
+	z-index: 2;
+	transition: left 10s ease-in, top 10s ease-in;
 }
 /*=============================*/
 /*-------------MODAL-----------*/

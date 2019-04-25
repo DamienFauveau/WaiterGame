@@ -7,9 +7,12 @@ document.addEventListener('DOMContentLoaded', function(event) {
 	document.getElementById('gameContainer').onclick = function() {
 		xpos = window.event.clientX
 		ypos = window.event.clientY
-		document.getElementById('waiter').style.top = ypos - 30 + 'px'
-		document.getElementById('waiter').style.left = xpos - 25 + 'px'
+		document.getElementById('waiter').style.top = ypos - 40 + 'px'
+		document.getElementById('waiter').style.left = xpos - 35 + 'px'
 	}
+
+	/* characters random places */
+	MovePeople()
 
 	/* toggle modals */
 	Array.prototype.forEach.call(document.getElementsByClassName("infosQuest"), function(element, index) {
@@ -107,7 +110,6 @@ function CheckChoice(userChoice, type) {
 		if(userChoice) {
 			valid = true
 		}
-		console.log(type + userChoice)
 		break
 	}
 	if(valid) {
@@ -160,6 +162,7 @@ function DeleteQuest(questId) {
     var rand = Math.round(Math.random() * (10000 - 5000)) + 5000 // nb between 500 and 3000
     setTimeout(function() {
     	TriggerEvent()
+    	MovePeople()
     	Loop()
     }, rand)
 }())
@@ -179,4 +182,12 @@ function DrunkEvent() {
 }
 function UnzippedEvent() {
 	document.getElementById('bodyChoiceContent').innerHTML = "This guy came back from the bathroom with his pants unzipped. Do you tell him ?"
+}
+
+function MovePeople() {
+	Array.prototype.forEach.call(document.getElementsByClassName("person"), function(element, index) {
+		document.getElementsByClassName("person")[index].style.top = Math.random() * 300 + 50 + 'px'
+		document.getElementsByClassName("person")[index].style.left = Math.random() * 300 + 50 + 'px'
+		console.log(document.getElementsByClassName("person")[index])
+	})
 }
