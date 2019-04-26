@@ -3,6 +3,14 @@ document.addEventListener('contextmenu', event => event.preventDefault())
 /* EVENTS */
 document.addEventListener('DOMContentLoaded', function(event) {
 
+	/* play random song */
+	PlayRandomSong()
+	Array.prototype.forEach.call(document.getElementsByClassName("infosQuest"), function(element, index) {
+		element.onended = function() {
+			PlayRandomSong()
+		}
+	})
+
 	/* move character to cursor */
 	document.getElementById('gameContainer').onclick = function() {
 		xpos = window.event.clientX
@@ -99,7 +107,7 @@ function CocktailPunch() {
 }
 
 function CheckChoice(userChoice, type) {
-	var valid = false;
+	var valid = false
 	switch(type) {
 		case 'drunk':
 		if(!userChoice) {
@@ -133,7 +141,7 @@ function TriggerEvent() {
 function AddQuest(questType) {
 	questAffected = false
 	Array.prototype.forEach.call(document.getElementsByClassName("infosQuest"), function(element, index) {
-		if(element.children[0].innerHTML == "Empty Quest" && !questAffected) {
+		if(element.children[0].innerHTML == "None" && !questAffected) {
 			switch(questType) {
 				case 'cocktail':
 				element.children[0].innerHTML = 'Make a cocktail'
@@ -153,13 +161,13 @@ function AddQuest(questType) {
 }
 
 function DeleteQuest(questId) {
-	document.getElementById(questId.id).children[0].innerHTML = "Empty Quest"
+	document.getElementById(questId.id).children[0].innerHTML = "None"
 	document.getElementById(questId.id).children[1].innerHTML = ""
 }
 
 /* call randomly function (wait between 5s and 10s) */
 (function Loop() {
-    var rand = Math.round(Math.random() * (10000 - 5000)) + 5000 // nb between 500 and 3000
+    var rand = Math.round(Math.random() * (10000 - 5000)) + 5000
     setTimeout(function() {
     	TriggerEvent()
     	MovePeople()
@@ -168,12 +176,12 @@ function DeleteQuest(questId) {
 }())
 
 function AddPoint() {
-	var nbPoints = document.getElementById('numberPoints').innerHTML;
+	var nbPoints = document.getElementById('numberPoints').innerHTML
 	document.getElementById('numberPoints').innerHTML = parseInt(nbPoints, 10) + 1
 }
 
 function RemovePoint() {
-	var nbPoints = document.getElementById('numberPoints').innerHTML;
+	var nbPoints = document.getElementById('numberPoints').innerHTML
 	document.getElementById('numberPoints').innerHTML = parseInt(nbPoints, 10) - 1
 }
 
@@ -186,8 +194,12 @@ function UnzippedEvent() {
 
 function MovePeople() {
 	Array.prototype.forEach.call(document.getElementsByClassName("person"), function(element, index) {
-		document.getElementsByClassName("person")[index].style.top = Math.random() * 300 + 50 + 'px'
-		document.getElementsByClassName("person")[index].style.left = Math.random() * 300 + 50 + 'px'
-		console.log(document.getElementsByClassName("person")[index])
+		document.getElementsByClassName("person")[index].style.top = Math.random() * 250 + 50 + 'px'
+		document.getElementsByClassName("person")[index].style.left = Math.random() * 400 + 'px'
 	})
+}
+
+function PlayRandomSong() {
+	nb = Math.floor(Math.random()*4)
+	document.getElementsByClassName("player")[nb].play()
 }

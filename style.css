@@ -65,7 +65,7 @@ img#bar {
 	left: 276px;
 	z-index: 1;
 }
-img.table, img.plant {
+img.table, img#musicGroup {
 	z-index: 1;
 }
 img#table1 {
@@ -82,19 +82,15 @@ img#table3 {
 }
 img#table4 {
 	top: 320px;
-	left: 20px;
+	left: 5px;
 }
 img#table5 {
-	top: 400px;
-	left: 120px;
+    top: 410px;
+    left: 275px;
 }
-img#table6 {
-	top: 400px;
-	left: 250px;
-}
-img#plant2 {
-	top: 415px;
-	left: 30px;
+img#musicGroup {
+	top: 390px;
+	left: 0px;
 }
 /*=============================*/
 /*----------CHARACTERS---------*/
@@ -103,11 +99,11 @@ img#waiter {
 	top: 0px;
 	left: 368px;
 	z-index: 3;
-	transition: left .5s ease-in, top .5s ease-in;
+	transition: left .5s linear, top .5s linear;
 }
 img.person {
 	z-index: 2;
-	transition: left 10s ease-in, top 10s ease-in;
+	transition: left 10s linear , top 10s linear;
 }
 /*=============================*/
 /*-------------MODAL-----------*/
@@ -189,3 +185,14 @@ img.person {
 	text-decoration: none;
 	cursor: pointer;
 }
+/*=============================*/
+/*------------MOBILE-----------*/
+/*=============================*/
+/*@media screen and (max-width: 768px) {
+	div#gameContainer {
+		width: 100%;
+	}
+	.modalContent {
+		width: 100%;
+	}
+}*/
