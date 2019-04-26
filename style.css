@@ -185,14 +185,3 @@ img.person {
 	text-decoration: none;
 	cursor: pointer;
 }
-/*=============================*/
-/*------------MOBILE-----------*/
-/*=============================*/
-/*@media screen and (max-width: 768px) {
-	div#gameContainer {
-		width: 100%;
-	}
-	.modalContent {
-		width: 100%;
-	}
-}*/

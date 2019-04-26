@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
 	/* play random song */
 	PlayRandomSong()
-	Array.prototype.forEach.call(document.getElementsByClassName("infosQuest"), function(element, index) {
+	Array.prototype.forEach.call(document.getElementsByClassName("player"), function(element, index) {
 		element.onended = function() {
 			PlayRandomSong()
 		}
