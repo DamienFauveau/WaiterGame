@@ -1,6 +1,8 @@
 document.addEventListener('contextmenu', event => event.preventDefault())
 
-/* EVENTS */
+/*=============================*/
+/*------------EVENTS-----------*/
+/*=============================*/
 document.addEventListener('DOMContentLoaded', function(event) {
 
 	/* play random song */
@@ -29,11 +31,11 @@ document.addEventListener('DOMContentLoaded', function(event) {
 				case 'cocktail':
 				if(Math.random() > 0.5) {
 					document.getElementById('buttonCocktail').value = 'mojito'
-					document.getElementById('modalCocktailName').innerHTML = 'Mojito'
+					document.getElementById('modalCocktailName').innerHTML = GetRandomName() + ' wants a mojito'
 				}
 				else {
 					document.getElementById('buttonCocktail').value = 'punch'
-					document.getElementById('modalCocktailName').innerHTML = 'Punch'
+					document.getElementById('modalCocktailName').innerHTML = GetRandomName() + ' wants a punch'
 				}
 				document.getElementById('modalCocktail').style.display = "block"
 				DeleteQuest(this)
@@ -69,12 +71,30 @@ document.addEventListener('DOMContentLoaded', function(event) {
 		CheckCocktail(this.value)
 	}
 
+	/* Play again btn */
+	document.getElementById('buttonPlayAgain').onclick = function() {
+		document.location.reload()
+	}
+
+	/* Stop btn */
+	document.getElementById('buttonStopGame').onclick = function() {
+		document.getElementById('modalFinal').style.display = "block"
+		//stop function loop
+		var nbPoints = document.getElementById('numberPoints').innerHTML
+		var minuteNb = 1
+		document.getElementById('ratioPointsMin').innerHTML = parseInt(nbPoints, 10) / minuteNb
+		//get score 4 possibilities
+		//opacity 25% 3 others
+	}
+
 })
 
+/*=============================*/
+/*-----------FUNCTIONS---------*/
+/*=============================*/
 function CheckCocktail(cocktailName) {
 	var chosenIng = []
 	var correctIng
-
 	switch(cocktailName) {
 		case 'mojito':
 		correctIng = CocktailMojito()
@@ -83,19 +103,16 @@ function CheckCocktail(cocktailName) {
 		correctIng = CocktailPunch()
 		break
 	}
-	
 	Array.prototype.forEach.call(document.getElementsByClassName("ingredient"), function(element, index) {
 		if(element.checked)
 			chosenIng.push(element['value'])
 		element.checked = false
 	})
-
 	if(JSON.stringify(chosenIng) === JSON.stringify(correctIng)) {
 		AddPoint()
 	} else {
 		RemovePoint()
 	}
-	
 	document.getElementById('modalCocktail').style.display = "none"
 }
 
@@ -167,12 +184,12 @@ function DeleteQuest(questId) {
 
 /* call randomly function (wait between 5s and 10s) */
 (function Loop() {
-    var rand = Math.round(Math.random() * (10000 - 5000)) + 5000
-    setTimeout(function() {
-    	TriggerEvent()
-    	MovePeople()
-    	Loop()
-    }, rand)
+	var rand = Math.round(Math.random() * (10000 - 5000)) + 5000
+	setTimeout(function() {
+		TriggerEvent()
+		MovePeople()
+		Loop()
+	}, rand)
 }())
 
 function AddPoint() {
@@ -186,10 +203,10 @@ function RemovePoint() {
 }
 
 function DrunkEvent() {
-	document.getElementById('bodyChoiceContent').innerHTML = "This guy is wasted and ask for another drink. What do you do ?"
+	document.getElementById('bodyChoiceContent').innerHTML = GetRandomName() + " is wasted and ask for another drink. What do you do ?"
 }
 function UnzippedEvent() {
-	document.getElementById('bodyChoiceContent').innerHTML = "This guy came back from the bathroom with his pants unzipped. Do you tell him ?"
+	document.getElementById('bodyChoiceContent').innerHTML = GetRandomName() + " came back from the bathroom with his pants unzipped. Do you tell him ?"
 }
 
 function MovePeople() {
@@ -202,4 +219,25 @@ function MovePeople() {
 function PlayRandomSong() {
 	nb = Math.floor(Math.random()*4)
 	document.getElementsByClassName("player")[nb].play()
+}
+
+function GetRandomName() {
+	names = [
+		'Floris',
+		'Eivind',
+		'Dylan',
+		'Francesca',
+		'Erik',
+		'Dennis',
+		'Kévin',
+		'François',
+		'Edi',
+		'Jan',
+		'Magnus',
+		'Eddie',
+		'Camilla',
+		'Axelle'
+	]
+	randomNb = Math.floor(Math.random()*names.length)
+	return names[randomNb]
 }
