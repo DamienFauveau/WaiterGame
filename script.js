@@ -91,7 +91,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
 		var nbPoints = document.getElementById('numberPoints').innerHTML
 		var now = new Date().getTime()
 		var timeElapsed = now - time
-		console.log(timeElapsed)
 		document.getElementById('ratioPointsMin').innerHTML = parseInt(nbPoints, 10) / (timeElapsed / 1000 / 60)
 		sortedPoints = GetSortedKeys(points)
 		Array.prototype.forEach.call(document.getElementsByClassName("choiceResult"), function(element, index) {
