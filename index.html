@@ -64,8 +64,10 @@
 			<div class="modalBody" id="bodyChoiceContent">
 			</div>
 			<div class="modalFooter">
-				<span><button id="buttonAccept" class="close">ACCEPT</button></span>
-				<span><button id="buttonDeny" class="close">DENY</button></span>
+				<span><button class="close" value="OA">Call him out in front of everyone</button></span>
+				<span><button class="close" value="RE">Don’t say anything so he won’t feel embarrassed</button></span>
+				<span><button class="close" value="RC">Take him aside and explain to him</button></span>
+				<span><button class="close" value="MI">Don’t tell him but make fun of it with your colleagues</button></span>
 			</div>
 		</div>
 	</div>
@@ -106,11 +108,13 @@
 				<div id="scoreDiv">
 					<span>Points/Minute scored : </span>
 					<span id="ratioPointsMin"></span>
+					<br><br>
+					Your behaviour :
 				</div>
-				<div>Ruinous Empathy</div>
-				<div>Radical Candor</div>
-				<div>Manipulative Insincerity</div>
-				<div>Obnoxious Aggression</div>
+				<div id="RE" class="choiceResult">Ruinous Empathy</div>
+				<div id="RC" class="choiceResult">Radical Candor</div>
+				<div id="MI" class="choiceResult">Manipulative Insincerity</div>
+				<div id="OA" class="choiceResult">Obnoxious Aggression</div>
 			</div>
 			<div class="modalFooter">
 				<span><button id="buttonPlayAgain" class="close">PLAY AGAIN</button></span>

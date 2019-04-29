@@ -1,5 +1,7 @@
 document.addEventListener('contextmenu', event => event.preventDefault())
-var timeout;
+var timeout
+var points = { "RE" : 0, "RC" : 0, "MI": 0, "OA": 0 }
+var time = new Date().getTime()
 
 /*=============================*/
 /*------------EVENTS-----------*/
@@ -9,15 +11,12 @@ document.addEventListener('DOMContentLoaded', function(event) {
 	/* start game */
 	MovePeople()
 	Loop()
-	PlayRandomSong()
 
-	/* play random song at end of song */
-	Array.prototype.forEach.call(document.getElementsByClassName("player"), function(element, index) {
-		element.onended = function() {
-			PlayRandomSong()
-		}
-	})
-
+	/* play song on click music group */
+	document.getElementById('musicGroup').onclick = function() { 
+		PlayRandomSong()
+	}
+	
 	/* move character to cursor */
 	document.getElementById('gameContainer').onclick = function() {
 		xpos = window.event.clientX
@@ -52,14 +51,12 @@ document.addEventListener('DOMContentLoaded', function(event) {
 				DeleteQuest(this)
 				break
 				case 'choice':
-				if(Math.random() > 0.5) {
+				if(Math.random() < 0) {
 					document.getElementById('buttonAccept').value = 'drunk'
 					document.getElementById('buttonDeny').value = 'drunk'
 					DrunkEvent()
 				}
 				else {
-					document.getElementById('buttonAccept').value = 'pants'
-					document.getElementById('buttonDeny').value = 'pants'
 					UnzippedEvent()
 				}
 				document.getElementById('modalChoice').style.display = "block"
@@ -69,13 +66,12 @@ document.addEventListener('DOMContentLoaded', function(event) {
 		}
 	})
 
-	/* accept or deny request */
-	document.getElementById('buttonAccept').onclick = function() {
-		CheckChoice(true, this.value)
-	}
-	document.getElementById('buttonDeny').onclick = function() {
-		CheckChoice(false, this.value)
-	}
+	/* event response */
+	Array.prototype.forEach.call(document.getElementsByClassName("close"), function(element, index) {
+		element.onclick = function() {
+			CheckChoice(element.value)
+		}
+	})
 
 	/* Check if cocktail is correct */
 	document.getElementById('buttonCocktail').onclick = function() {
@@ -93,10 +89,16 @@ document.addEventListener('DOMContentLoaded', function(event) {
 		clearTimeout(timeout)
 		Loop = undefined
 		var nbPoints = document.getElementById('numberPoints').innerHTML
-		var minuteNb = 1
-		document.getElementById('ratioPointsMin').innerHTML = parseInt(nbPoints, 10) / minuteNb
-		//get score 4 possibilities
-		//opacity 25% 3 others
+		var now = new Date().getTime()
+		var timeElapsed = now - time
+		console.log(timeElapsed)
+		document.getElementById('ratioPointsMin').innerHTML = parseInt(nbPoints, 10) / (timeElapsed / 1000 / 60)
+		sortedPoints = GetSortedKeys(points)
+		Array.prototype.forEach.call(document.getElementsByClassName("choiceResult"), function(element, index) {
+			if(element.id != sortedPoints[0] || points[element.id] == 0) {
+				element.style.opacity = "0.25"
+			}
+		})
 	}
 
 })
@@ -147,26 +149,8 @@ function CocktailPunch() {
 	return ["orange","sugar","rhum"]
 }
 
-function CheckChoice(userChoice, type) {
-	var valid = false
-	switch(type) {
-		case 'drunk':
-		if(!userChoice) {
-			valid = true
-		}
-		break
-		case 'pants':
-		if(userChoice) {
-			valid = true
-		}
-		break
-	}
-	if(valid) {
-		AddPoint()
-	}
-	else {
-		RemovePoint()
-	}
+function CheckChoice(userChoice) {
+	points[userChoice] += 1;
 	document.getElementById('modalChoice').style.display = "none"
 }
 
@@ -230,7 +214,7 @@ function DrunkEvent() {
 	document.getElementById('bodyChoiceContent').innerHTML = GetRandomName() + " is wasted and ask for another drink. What do you do ?"
 }
 function UnzippedEvent() {
-	document.getElementById('bodyChoiceContent').innerHTML = GetRandomName() + " came back from the bathroom with his pants unzipped. Do you tell him ?"
+	document.getElementById('bodyChoiceContent').innerHTML = GetRandomName() + " came back from the bathroom with his pants unzipped. Do you tell him / her ?"
 }
 
 function MovePeople() {
@@ -241,8 +225,16 @@ function MovePeople() {
 }
 
 function PlayRandomSong() {
+	StopSong()
 	nb = Math.floor(Math.random()*4)
 	document.getElementsByClassName("player")[nb].play()
+}
+
+function StopSong() {
+	Array.prototype.forEach.call(document.getElementsByClassName("player"), function(element, index) {
+		element.pause()
+		element.currentTime = 0
+	})
 }
 
 function GetRandomName() {
@@ -264,4 +256,9 @@ function GetRandomName() {
 	]
 	randomNb = Math.floor(Math.random()*names.length)
 	return names[randomNb]
+}
+
+function GetSortedKeys(obj) {
+    var keys = []; for(var key in obj) keys.push(key)
+    return keys.sort(function(a,b){return obj[b]-obj[a]})
 }

@@ -220,15 +220,15 @@ img.person {
 	color: black;
 }
 
-#modalFinal > .modalContent > #bodyFinal > div:nth-child(2) {
+#modalFinal > .modalContent > #bodyFinal > div#RE {
 	background-color: green;
 }
-#modalFinal > .modalContent > #bodyFinal > div:nth-child(3) {
+#modalFinal > .modalContent > #bodyFinal > div#RC {
 	background-color: red;
 }
-#modalFinal > .modalContent > #bodyFinal > div:nth-child(4) {
+#modalFinal > .modalContent > #bodyFinal > div#MI {
 	background-color: orange;
 }
-#modalFinal > .modalContent > #bodyFinal > div:nth-child(5) {
+#modalFinal > .modalContent > #bodyFinal > div#OA {
 	background-color: blue;
 }
