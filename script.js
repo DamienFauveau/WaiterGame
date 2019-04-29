@@ -1,12 +1,17 @@
 document.addEventListener('contextmenu', event => event.preventDefault())
+var timeout;
 
 /*=============================*/
 /*------------EVENTS-----------*/
 /*=============================*/
 document.addEventListener('DOMContentLoaded', function(event) {
 
-	/* play random song */
+	/* start game */
+	MovePeople()
+	Loop()
 	PlayRandomSong()
+
+	/* play random song at end of song */
 	Array.prototype.forEach.call(document.getElementsByClassName("player"), function(element, index) {
 		element.onended = function() {
 			PlayRandomSong()
@@ -21,17 +26,23 @@ document.addEventListener('DOMContentLoaded', function(event) {
 		document.getElementById('waiter').style.left = xpos - 35 + 'px'
 	}
 
-	/* characters random places */
-	MovePeople()
-
 	/* toggle modals */
 	Array.prototype.forEach.call(document.getElementsByClassName("infosQuest"), function(element, index) {
 		element.onclick = function() {
 			switch(this.children[1].innerHTML) {
 				case 'cocktail':
-				if(Math.random() > 0.5) {
+				var randomNumber = Math.random()
+				if(randomNumber < 0.25) {
 					document.getElementById('buttonCocktail').value = 'mojito'
 					document.getElementById('modalCocktailName').innerHTML = GetRandomName() + ' wants a mojito'
+				}
+				else if(randomNumber < 0.5) {
+					document.getElementById('buttonCocktail').value = 'orange'
+					document.getElementById('modalCocktailName').innerHTML = GetRandomName() + ' wants an orange juice'
+				}
+				else if(randomNumber < 0.75) {
+					document.getElementById('buttonCocktail').value = 'bloody'
+					document.getElementById('modalCocktailName').innerHTML = GetRandomName() + ' wants an bloody mary'
 				}
 				else {
 					document.getElementById('buttonCocktail').value = 'punch'
@@ -79,7 +90,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
 	/* Stop btn */
 	document.getElementById('buttonStopGame').onclick = function() {
 		document.getElementById('modalFinal').style.display = "block"
-		//stop function loop
+		clearTimeout(timeout)
+		Loop = undefined
 		var nbPoints = document.getElementById('numberPoints').innerHTML
 		var minuteNb = 1
 		document.getElementById('ratioPointsMin').innerHTML = parseInt(nbPoints, 10) / minuteNb
@@ -98,6 +110,12 @@ function CheckCocktail(cocktailName) {
 	switch(cocktailName) {
 		case 'mojito':
 		correctIng = CocktailMojito()
+		break
+		case 'orange':
+		correctIng = CocktailOrange()
+		break
+		case 'bloody':
+		correctIng = CocktailBloody()
 		break
 		case 'punch':
 		correctIng = CocktailPunch()
@@ -118,6 +136,12 @@ function CheckCocktail(cocktailName) {
 
 function CocktailMojito() {
 	return ["mint","sugar","rhum"]
+}
+function CocktailOrange() {
+	return ["orange"]
+}
+function CocktailBloody() {
+	return ["tomato","vodka","lemon"]
 }
 function CocktailPunch() {
 	return ["orange","sugar","rhum"]
@@ -183,14 +207,14 @@ function DeleteQuest(questId) {
 }
 
 /* call randomly function (wait between 5s and 10s) */
-(function Loop() {
+function Loop() {
 	var rand = Math.round(Math.random() * (10000 - 5000)) + 5000
-	setTimeout(function() {
+	timeout = setTimeout(function() {
 		TriggerEvent()
 		MovePeople()
 		Loop()
 	}, rand)
-}())
+}
 
 function AddPoint() {
 	var nbPoints = document.getElementById('numberPoints').innerHTML
