@@ -11,11 +11,13 @@ document.addEventListener('DOMContentLoaded', function(event) {
 	/* start game */
 	MovePeople()
 	Loop()
+	PlayRandomSong()
 
-	/* play song on click music group */
-	document.getElementById('musicGroup').onclick = function() { 
-		PlayRandomSong()
-	}
+	Array.prototype.forEach.call(document.getElementsByClassName("player"), function(element, index) {
+		element.onended = function() {
+			PlayRandomSong()
+		}
+	})
 	
 	/* move character to cursor */
 	document.getElementById('gameContainer').onclick = function() {
@@ -51,15 +53,14 @@ document.addEventListener('DOMContentLoaded', function(event) {
 				DeleteQuest(this)
 				break
 				case 'choice':
-				if(Math.random() < 0) {
-					document.getElementById('buttonAccept').value = 'drunk'
-					document.getElementById('buttonDeny').value = 'drunk'
+				if(Math.random() < 0.33) {
 					DrunkEvent()
+					document.getElementById('modalDrunk').style.display = "block"
 				}
 				else {
 					UnzippedEvent()
+					document.getElementById('modalChoice').style.display = "block"
 				}
-				document.getElementById('modalChoice').style.display = "block"
 				DeleteQuest(this)
 				break
 			}
@@ -91,7 +92,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
 		var nbPoints = document.getElementById('numberPoints').innerHTML
 		var now = new Date().getTime()
 		var timeElapsed = now - time
-		document.getElementById('ratioPointsMin').innerHTML = parseInt(nbPoints, 10) / (timeElapsed / 1000 / 60)
+		var scoreMin = parseInt(nbPoints, 10) / (timeElapsed / 1000 / 60)
+		document.getElementById('ratioPointsMin').innerHTML = Math.round(scoreMin * 10) / 10
 		sortedPoints = GetSortedKeys(points)
 		Array.prototype.forEach.call(document.getElementsByClassName("choiceResult"), function(element, index) {
 			if(element.id != sortedPoints[0] || points[element.id] == 0) {
@@ -149,8 +151,17 @@ function CocktailPunch() {
 }
 
 function CheckChoice(userChoice) {
-	points[userChoice] += 1;
-	document.getElementById('modalChoice').style.display = "none"
+	if (userChoice == 0 || userChoice == 1) {
+		if(userChoice == 1) {
+			RemovePoint()
+		} else {
+			AddPoint()
+		}
+		document.getElementById('modalDrunk').style.display = "none"
+	} else {
+		points[userChoice] += 1;
+		document.getElementById('modalChoice').style.display = "none"
+	}
 }
 
 function TriggerEvent() {
@@ -210,7 +221,7 @@ function RemovePoint() {
 }
 
 function DrunkEvent() {
-	document.getElementById('bodyChoiceContent').innerHTML = GetRandomName() + " is wasted and ask for another drink. What do you do ?"
+	document.getElementById('bodyDrunkContent').innerHTML = GetRandomName() + " is wasted and ask for another drink. What do you do ?"
 }
 function UnzippedEvent() {
 	document.getElementById('bodyChoiceContent').innerHTML = GetRandomName() + " came back from the bathroom with his pants unzipped. Do you tell him / her ?"
